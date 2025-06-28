@@ -29,7 +29,7 @@ import Paper from '../../Paper.js';
 import Renderer from '../../Renderer.js';
 import Selecto from './Selecto.js';
 import Moveable from './Moveable.js';
-import Guides from './Guides.js';
+// import Guides from './Guides.js'; // Disabled rulers
 import Mask from './Mask.js';
 import Padding from './Padding.js';
 import StaticSchema from '../../StaticSchema.js';
@@ -417,7 +417,7 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
         schemasList={schemasList}
         pageSizes={pageSizes}
         backgrounds={backgrounds}
-        hasRulers={true}
+        hasRulers={false}
         renderPaper={({ index, paperSize }) => (
           <>
             {!editing && activeElements.length > 0 && pageCursor === index && (
@@ -433,15 +433,7 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
               totalPages={schemasList.length}
               currentPage={index + 1}
             />
-            <Guides
-              paperSize={paperSize}
-              horizontalRef={(e) => {
-                if (e) horizontalGuides.current[index] = e;
-              }}
-              verticalRef={(e) => {
-                if (e) verticalGuides.current[index] = e;
-              }}
-            />
+            {/* Guides/Rulers are disabled */}
             {pageCursor !== index ? (
               <Mask
                 width={paperSize.width + RULER_HEIGHT}

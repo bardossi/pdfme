@@ -16,22 +16,22 @@
     "test:local": "LOCAL=true node --experimental-vm-modules node_modules/.bin/jest"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.0",
+    "@headlessui/react": "^2.2.4",
     "@pdfme/common": "file:../packages/common/dist",
     "@pdfme/converter": "file:../packages/converter/dist",
     "@pdfme/generator": "file:../packages/generator/dist",
     "@pdfme/manipulator": "file:../packages/manipulator/dist",
     "@pdfme/schemas": "file:../packages/schemas/dist",
     "@pdfme/ui": "file:../packages/ui/dist",
-    "@sentry/react": "^9.5.0",
+    "@sentry/react": "^9.33.0",
     "@sentry/vite-plugin": "^3.2.2",
     "canvas": "^2.11.2",
     "esbuild": "^0.19.10",
     "lucide-react": "^0.475.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0",
-    "react-toastify": "^11.0.3",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1",
+    "react-toastify": "^11.0.5",
     "signature_pad": "^4.1.6"
   },
   "devDependencies": {

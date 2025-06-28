@@ -1,4 +1,3 @@
-import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -6,10 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   build: { 
     target: 'esnext',
-    sourcemap: true // Enable source maps for production builds
+    sourcemap: true
   },
-  plugins: [react(), sentryVitePlugin({
-    org: "hand-dot",
-    project: "playground-pdfme"
-  })],
+  plugins: [react()],
 });
