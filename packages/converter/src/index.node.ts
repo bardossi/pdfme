@@ -32,7 +32,7 @@ export const pdf2img = async (
         throw new Error('Canvas does not support getContext');
       }
       // Add any missing properties that pdfjs might expect
-      if (!canvas.style) {
+      if (!(canvas as any).style) {
         (canvas as any).style = {};
       }
       if (!canvas.width) {
