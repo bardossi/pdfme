@@ -9,7 +9,7 @@ import {
   Plugin,
   UIOptions,
   cloneDeep,
-} from '@pdfme/common';
+} from '@sunnystudiohu/common';
 import { theme as antdTheme } from 'antd';
 import { SELECTABLE_CLASSNAME } from '../constants.js';
 import { PluginsRegistry, OptionsContext, I18nContext, CacheContext } from '../contexts.js';
@@ -150,7 +150,7 @@ const Renderer = (props: RendererProps) => {
   }, reRenderDependencies);
 
   if (!plugin) {
-    console.error(`[@pdfme/ui] Renderer for type ${schema.type} not found. 
+    console.error(`[@sunnystudiohu/ui] Renderer for type ${schema.type} not found. 
 Check this document: https://pdfme.com/docs/custom-schemas`);
     return <></>;
   }

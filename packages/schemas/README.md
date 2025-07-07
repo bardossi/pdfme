@@ -1,4 +1,4 @@
-## @pdfme/schemas
+## @sunnystudiohu/schemas
 
 This library provides schemas for pdfme templates.  
 The currently supported schemas can be found in [this document](https://pdfme.com/docs/supported-features).

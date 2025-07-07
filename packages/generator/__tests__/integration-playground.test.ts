@@ -1,7 +1,7 @@
 import generate from '../src/generate.js';
-import { Template } from '@pdfme/common';
-import { getInputFromTemplate } from '@pdfme/common';
-import { text, image, svg, line, rectangle, ellipse, barcodes, table, multiVariableText } from '@pdfme/schemas';
+import { Template } from '@sunnystudiohu/common';
+import { getInputFromTemplate } from '@sunnystudiohu/common';
+import { text, image, svg, line, rectangle, ellipse, barcodes, table, multiVariableText } from '@sunnystudiohu/schemas';
 import { getFont, pdfToImages } from './utils.js';
 import * as fs from 'fs';
 import * as path from 'path';

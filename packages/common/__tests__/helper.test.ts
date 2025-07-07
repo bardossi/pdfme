@@ -152,7 +152,7 @@ describe('checkGenerateProps', () => {
       }
     };
 
-    expect(() => checkGenerateProps(invalidProps)).toThrow("[@pdfme/common] Invalid argument:\n" +
+    expect(() => checkGenerateProps(invalidProps)).toThrow("[@sunnystudiohu/common] Invalid argument:\n" +
       "--------------------------\n" +
       "ERROR POSITION: template.schemas\n" +
       "ERROR MESSAGE: Expected array, received string\n" +
@@ -174,7 +174,7 @@ describe('checkGenerateProps', () => {
       }
     };
 
-    expect(() => checkGenerateProps(missingSchemaProps)).toThrow("[@pdfme/common] Invalid argument:\n" +
+    expect(() => checkGenerateProps(missingSchemaProps)).toThrow("[@sunnystudiohu/common] Invalid argument:\n" +
       "--------------------------\n" +
       "ERROR POSITION: template.schemas\n" +
       "ERROR MESSAGE: Required\n" +
@@ -220,7 +220,7 @@ describe('checkGenerateProps', () => {
       }
     };
 
-    expect(() => checkGenerateProps(invalidPluginProps)).toThrow("[@pdfme/common] Invalid argument:\n" +
+    expect(() => checkGenerateProps(invalidPluginProps)).toThrow("[@sunnystudiohu/common] Invalid argument:\n" +
       "--------------------------\n" +
       "ERROR POSITION: plugins.invalid.ui\n" +
       "ERROR MESSAGE: Required\n" +
@@ -322,7 +322,7 @@ describe('checkFont test', () => {
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] fallback flag is not found in font. true fallback flag must be only one.
+        `[@sunnystudiohu/common] fallback flag is not found in font. true fallback flag must be only one.
 Check this document: https://pdfme.com/docs/custom-fonts#about-font-type`
       );
     }
@@ -339,7 +339,7 @@ Check this document: https://pdfme.com/docs/custom-fonts#about-font-type`
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] 2 fallback flags found in font. true fallback flag must be only one.
+        `[@sunnystudiohu/common] 2 fallback flags found in font. true fallback flag must be only one.
 Check this document: https://pdfme.com/docs/custom-fonts#about-font-type`
       );
     }
@@ -376,7 +376,7 @@ Check this document: https://pdfme.com/docs/custom-fonts#about-font-type`
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] NotoSans2 of template.schemas is not found in font.
+        `[@sunnystudiohu/common] NotoSans2 of template.schemas is not found in font.
 Check this document: https://pdfme.com/docs/custom-fonts`
       );
     }
@@ -414,7 +414,7 @@ Check this document: https://pdfme.com/docs/custom-fonts`
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] NotoSans2,NotoSerif2 of template.schemas is not found in font.
+        `[@sunnystudiohu/common] NotoSans2,NotoSerif2 of template.schemas is not found in font.
 Check this document: https://pdfme.com/docs/custom-fonts`
       );
     }
@@ -505,7 +505,7 @@ describe('checkPlugins test', () => {
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] fail of template.schemas is not found in plugins.`
+        `[@sunnystudiohu/common] fail of template.schemas is not found in plugins.`
       );
     }
   });
@@ -518,7 +518,7 @@ describe('checkPlugins test', () => {
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] fail,fail2 of template.schemas is not found in plugins.`
+        `[@sunnystudiohu/common] fail,fail2 of template.schemas is not found in plugins.`
       );
     }
   });

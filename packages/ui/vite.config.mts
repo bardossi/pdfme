@@ -10,13 +10,13 @@ export default defineConfig(({ mode }) => {
     build: {
       lib: {
         entry: 'src/index.ts',
-        name: '@pdfme/ui',
+        name: '@sunnystudiohu/ui',
         fileName: (format) => `index.${format}.js`,
       },
     },
     optimizeDeps: {
       include: ['react', 'react-dom', 'pdfjs-dist', 'antd'],
-      exclude: ['@pdfme/common', '@pdfme/schemas', '@pdfme/converter'],
+      exclude: ['@sunnystudiohu/common', '@sunnystudiohu/schemas', '@sunnystudiohu/converter'],
     },
   };
 });

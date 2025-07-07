@@ -1,6 +1,6 @@
 {
-  "name": "@pdfme/generator",
-  "version": "0.0.0",
+  "name": "@sunnystudiohu/generator",
+  "version": "0.0.2",
   "sideEffects": false,
   "author": "hand-dot",
   "license": "MIT",
@@ -48,17 +48,17 @@
     "prettier": "prettier --write 'src/**/*.ts'"
   },
   "dependencies": {
-    "@pdfme/pdf-lib": "*",
+    "@sunnystudiohu/pdf-lib": "*",
     "fontkit": "^2.0.2"
   },
   "devDependencies": {
-    "@pdfme/common": "*",
-    "@pdfme/converter": "*",
-    "@pdfme/schemas": "*"
+    "@sunnystudiohu/common": "*",
+    "@sunnystudiohu/converter": "*",
+    "@sunnystudiohu/schemas": "*"
   },
   "peerDependencies": {
-    "@pdfme/common": "latest",
-    "@pdfme/schemas": "latest"
+    "@sunnystudiohu/common": "latest",
+    "@sunnystudiohu/schemas": "latest"
   },
   "jest": {
     "resolver": "ts-jest-resolver",
@@ -66,7 +66,7 @@
       "<rootDir>/jest.setup.js"
     ],
     "moduleNameMapper": {
-      "^@pdfme/schemas/utils$": "<rootDir>/../schemas/src/utils.ts",
+      "^@sunnystudiohu/schemas/utils$": "<rootDir>/../schemas/src/utils.ts",
       "^.+\\\\.(css|less|scss)$": "identity-obj-proxy"
     },
     "transformIgnorePatterns": [

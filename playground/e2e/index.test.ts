@@ -1,5 +1,5 @@
 import puppeteer, { Browser, Page } from 'puppeteer';
-import { pdf2img } from '@pdfme/converter';
+import { pdf2img } from '@sunnystudiohu/converter';
 import { createRunner, parse, PuppeteerRunnerExtension } from '@puppeteer/replay';
 import { ChildProcessWithoutNullStreams } from 'child_process';
 import { spawn } from 'child_process';

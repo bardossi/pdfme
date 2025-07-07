@@ -11,8 +11,8 @@ import {
   Size,
   isBlankPdf,
   PluginRegistry,
-} from '@pdfme/common';
-import { pdf2size } from '@pdfme/converter';
+} from '@sunnystudiohu/common';
+import { pdf2size } from '@sunnystudiohu/converter';
 import { DEFAULT_MAX_ZOOM, RULER_HEIGHT } from './constants.js';
 import { OptionsContext } from './contexts.js';
 
@@ -102,6 +102,8 @@ const rmMac = 'delete';
 const esc = 'esc';
 const copyWin = 'ctrl+c';
 const copyMac = 'command+c';
+const cutWin = 'ctrl+x';
+const cutMac = 'command+x';
 const pasteWin = 'ctrl+v';
 const pasteMac = 'command+v';
 const redoWin = 'ctrl+y';
@@ -127,6 +129,8 @@ const keys = [
   esc,
   copyWin,
   copyMac,
+  cutWin,
+  cutMac,
   pasteWin,
   pasteMac,
   redoWin,
@@ -144,6 +148,7 @@ export const initShortCuts = (arg: {
   remove: () => void;
   esc: () => void;
   copy: () => void;
+  cut: () => void;
   paste: () => void;
   redo: () => void;
   undo: () => void;
@@ -182,6 +187,10 @@ export const initShortCuts = (arg: {
       case copyWin:
       case copyMac:
         arg.copy();
+        break;
+      case cutWin:
+      case cutMac:
+        arg.cut();
         break;
       case pasteWin:
       case pasteMac:

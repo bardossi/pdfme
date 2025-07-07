@@ -18,8 +18,8 @@ import {
   checkUIOptions,
   checkPreviewProps,
   pluginRegistry,
-} from '@pdfme/common';
-import { builtInPlugins } from '@pdfme/schemas';
+} from '@sunnystudiohu/common';
+import { builtInPlugins } from '@sunnystudiohu/schemas';
 
 export abstract class BaseUIClass {
   protected domContainer!: HTMLElement | null;

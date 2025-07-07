@@ -19,7 +19,7 @@ import {
   BasePdf,
   isBlankPdf,
   replacePlaceholders,
-} from '@pdfme/common';
+} from '@sunnystudiohu/common';
 import { PluginsRegistry } from '../../../contexts.js';
 import { X } from 'lucide-react';
 import { RULER_HEIGHT, RIGHT_SIDEBAR_WIDTH } from '../../../constants.js';

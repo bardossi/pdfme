@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Plugin, Schema } from '@pdfme/common';
+import { Plugin, Schema } from '@sunnystudiohu/common';
 import { OptionsContext } from '../../contexts.js';
 import { theme } from 'antd';
 

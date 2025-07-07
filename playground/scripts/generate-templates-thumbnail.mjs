@@ -2,9 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import pLimit from 'p-limit';
-import { generate } from '@pdfme/generator';
-import { pdf2img } from '@pdfme/converter';
-import { getInputFromTemplate, getDefaultFont } from '@pdfme/common';
+import { generate } from '@sunnystudiohu/generator';
+import { pdf2img } from '@sunnystudiohu/converter';
+import { getInputFromTemplate, getDefaultFont } from '@sunnystudiohu/common';
 import {
   multiVariableText,
   text,
@@ -21,7 +21,7 @@ import {
   select,
   checkbox,
   radioGroup,
-} from '@pdfme/schemas';
+} from '@sunnystudiohu/schemas';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 

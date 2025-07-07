@@ -1,4 +1,4 @@
-// No imports needed from @pdfme/common
+// No imports needed from @sunnystudiohu/common
 import {
   TextAlignCenterIcon,
   TextAlignLeftIcon,

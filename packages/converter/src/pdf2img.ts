@@ -59,6 +59,6 @@ export async function pdf2img(
 
     return results;
   } catch (error) {
-    throw new Error(`[@pdfme/converter] pdf2img failed: ${(error as Error).message}`);
+    throw new Error(`[@sunnystudiohu/converter] pdf2img failed: ${(error as Error).message}`);
   }
 }

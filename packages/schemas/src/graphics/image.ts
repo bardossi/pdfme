@@ -1,9 +1,9 @@
 import type { ChangeEvent } from 'react';
-import type { PDFImage } from '@pdfme/pdf-lib';
-import type { Plugin } from '@pdfme/common';
-import type { Schema } from '@pdfme/common';
+import type { PDFImage } from '@sunnystudiohu/pdf-lib';
+import type { Plugin } from '@sunnystudiohu/common';
+import type { Schema } from '@sunnystudiohu/common';
 import type * as CSS from 'csstype';
-import { px2mm } from '@pdfme/common';
+import { px2mm } from '@sunnystudiohu/common';
 import { Image } from 'lucide';
 import {
   convertForPdfLayoutProps,

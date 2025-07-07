@@ -98,7 +98,7 @@ function resortChildren(page: LayoutNode, orderMap: Map<string, number>): void {
       const orderA = orderMap.get(a.schema?.name ?? '');
       const orderB = orderMap.get(b.schema?.name ?? '');
       if (orderA === undefined || orderB === undefined) {
-        throw new Error('[@pdfme/common] order is not defined');
+        throw new Error('[@sunnystudiohu/common] order is not defined');
       }
       return orderA - orderB;
     })
@@ -193,7 +193,7 @@ function breakIntoPages(arg: {
       newY = calculateNewY(y, targetPageIndex);
     }
 
-    if (!schema) throw new Error('[@pdfme/common] schema is undefined');
+    if (!schema) throw new Error('[@sunnystudiohu/common] schema is undefined');
 
     const clonedElement = createNode({ schema, position: { x, y: newY }, width, height });
     pages[targetPageIndex].insertChild(clonedElement);
@@ -215,7 +215,7 @@ function createNewTemplate(pages: LayoutNode[], basePdf: BlankPdf): Template {
   cloneDeep(pages).forEach((page, pageIndex) => {
     page.children.forEach((child) => {
       const { schema } = child;
-      if (!schema) throw new Error('[@pdfme/common] schema is undefined');
+      if (!schema) throw new Error('[@sunnystudiohu/common] schema is undefined');
 
       const name = schema.name;
       if (!nameToSchemas.has(name)) {
@@ -228,7 +228,7 @@ function createNewTemplate(pages: LayoutNode[], basePdf: BlankPdf): Template {
 
       if (sameNameSchemas.length > 0) {
         if (!sameNameSchemas[0].schema) {
-          throw new Error('[@pdfme/common] schema is undefined');
+          throw new Error('[@sunnystudiohu/common] schema is undefined');
         }
 
         // Use the first schema to get the schema and position

@@ -1,4 +1,4 @@
-## @pdfme/converter
+## @sunnystudiohu/converter
 
 This library provides utility functions for converting PDFs to other formats or converting data—such as Markdown—into PDF(WIP).
 

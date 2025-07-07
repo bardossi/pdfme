@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { cloneDeep, Template, checkTemplate, Lang, isBlankPdf } from "@pdfme/common";
-import { Designer } from "@pdfme/ui";
+import { cloneDeep, Template, checkTemplate, Lang, isBlankPdf } from "@sunnystudiohu/common";
+import { Designer } from "@sunnystudiohu/ui";
 import {
   getFontsData,
   getTemplateById,

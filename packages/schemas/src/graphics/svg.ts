@@ -1,4 +1,4 @@
-import { Plugin, Schema } from '@pdfme/common';
+import { Plugin, Schema } from '@sunnystudiohu/common';
 import {
   convertForPdfLayoutProps,
   isEditable,

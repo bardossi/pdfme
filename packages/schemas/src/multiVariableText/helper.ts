@@ -17,7 +17,7 @@ export const substituteVariables = (
         ? (JSON.parse(variablesIn || '{}') as Record<string, string>)
         : variablesIn;
     } catch {
-      throw new SyntaxError(`[@pdfme/schemas] MVT: invalid JSON string '${variablesIn as string}'`);
+      throw new SyntaxError(`[@sunnystudiohu/schemas] MVT: invalid JSON string '${variablesIn as string}'`);
     }
 
     Object.keys(variables).forEach((variableName) => {
@@ -44,7 +44,7 @@ export const validateVariables = (value: string, schema: MultiVariableTextSchema
     values = value ? (JSON.parse(value) as Record<string, string>) : {};
   } catch {
     throw new SyntaxError(
-      `[@pdfme/generator] invalid JSON string '${value}' for variables in field ${schema.name}`,
+      `[@sunnystudiohu/generator] invalid JSON string '${value}' for variables in field ${schema.name}`,
     );
   }
 
@@ -52,7 +52,7 @@ export const validateVariables = (value: string, schema: MultiVariableTextSchema
     if (!values[variable]) {
       if (schema.required) {
         throw new Error(
-          `[@pdfme/generator] variable ${variable} is missing for field ${schema.name}`,
+          `[@sunnystudiohu/generator] variable ${variable} is missing for field ${schema.name}`,
         );
       }
       // If not required, then simply don't render this field if an input is missing

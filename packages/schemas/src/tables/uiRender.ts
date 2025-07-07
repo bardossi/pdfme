@@ -1,6 +1,6 @@
-import type { UIRenderProps, Mode } from '@pdfme/common';
+import type { UIRenderProps, Mode } from '@sunnystudiohu/common';
 import type { TableSchema, CellStyle, Styles } from './types.js';
-import { px2mm } from '@pdfme/common';
+import { px2mm } from '@sunnystudiohu/common';
 import { createSingleTable } from './tableHelper.js';
 import { getBody, getBodyWithRange } from './helper.js';
 import cell from './cell.js';

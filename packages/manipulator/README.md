@@ -1,4 +1,4 @@
-## @pdfme/manipulator
+## @sunnystudiohu/manipulator
 
 This library provides utility functions for merging, splitting, and manipulating PDF files.
 

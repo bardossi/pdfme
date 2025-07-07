@@ -6,8 +6,8 @@ import {
   Size,
   getDynamicTemplate,
   replacePlaceholders,
-} from '@pdfme/common';
-import { getDynamicHeightsForTable } from '@pdfme/schemas/utils';
+} from '@sunnystudiohu/common';
+import { getDynamicHeightsForTable } from '@sunnystudiohu/schemas/utils';
 import UnitPager from './UnitPager.js';
 import Root from './Root.js';
 import StaticSchema from './StaticSchema.js';
@@ -77,7 +77,7 @@ const Preview = ({
         setSchemasList(sl);
         await refresh(dynamicTemplate);
       })
-      .catch((err) => console.error(`[@pdfme/ui] `, err));
+      .catch((err) => console.error(`[@sunnystudiohu/ui] `, err));
   };
 
   // Update component state only when _options_ changes

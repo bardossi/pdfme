@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Size } from '@pdfme/common';
+import { Size } from '@sunnystudiohu/common';
 import { I18nContext } from '../contexts.js';
 import { BACKGROUND_COLOR } from '../constants.js';
 import { theme, Result } from 'antd';

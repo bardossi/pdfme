@@ -4,13 +4,13 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@pdfme/common": [
+      "@sunnystudiohu/common": [
         "packages/common/dist/esm/src"
       ],
-      "@pdfme/schemas": [
+      "@sunnystudiohu/schemas": [
         "packages/schemas/dist/esm/src"
       ],
-      "@pdfme/schemas/utils": [
+      "@sunnystudiohu/schemas/utils": [
         "packages/schemas/dist/esm/src/utils"
       ]
     }

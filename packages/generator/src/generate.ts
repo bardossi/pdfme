@@ -1,5 +1,5 @@
-import * as pdfLib from '@pdfme/pdf-lib';
-import type { GenerateProps, Schema, PDFRenderProps, Template } from '@pdfme/common';
+import * as pdfLib from '@sunnystudiohu/pdf-lib';
+import type { GenerateProps, Schema, PDFRenderProps, Template } from '@sunnystudiohu/common';
 import {
   checkGenerateProps,
   getDynamicTemplate,
@@ -7,8 +7,8 @@ import {
   replacePlaceholders,
   pt2mm,
   cloneDeep,
-} from '@pdfme/common';
-import { getDynamicHeightsForTable } from '@pdfme/schemas';
+} from '@sunnystudiohu/common';
+import { getDynamicHeightsForTable } from '@sunnystudiohu/schemas';
 import {
   insertPage,
   preprocessing,
@@ -26,7 +26,7 @@ const generate = async (props: GenerateProps) => {
 
   if (inputs.length === 0) {
     throw new Error(
-      '[@pdfme/generator] inputs should not be empty, pass at least an empty object in the array',
+      '[@sunnystudiohu/generator] inputs should not be empty, pass at least an empty object in the array',
     );
   }
 

@@ -1,4 +1,4 @@
-import { Schema } from '@pdfme/common';
+import { Schema } from '@sunnystudiohu/common';
 import { BARCODE_TYPES } from './constants.js';
 
 export interface BarcodeSchema extends Schema {

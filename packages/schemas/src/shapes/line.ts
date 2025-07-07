@@ -1,4 +1,4 @@
-import type { Schema, Plugin } from '@pdfme/common';
+import type { Schema, Plugin } from '@sunnystudiohu/common';
 import {
   rotatePoint,
   convertForPdfLayoutProps,

@@ -1,7 +1,7 @@
 import generate from '../src/generate.js';
 import { segmenter } from './assets/templates/index.js';
-import { getInputFromTemplate } from '@pdfme/common';
-import { text, multiVariableText, image, barcodes } from '@pdfme/schemas';
+import { getInputFromTemplate } from '@sunnystudiohu/common';
+import { text, multiVariableText, image, barcodes } from '@sunnystudiohu/schemas';
 import { getFont, pdfToImages } from './utils.js';
 import 'jest-image-snapshot';
 

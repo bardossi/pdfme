@@ -1,6 +1,6 @@
 {
-  "name": "@pdfme/common",
-  "version": "0.0.0",
+  "name": "@sunnystudiohu/common",
+  "version": "0.0.2",
   "sideEffects": false,
   "author": "hand-dot",
   "license": "MIT",
@@ -48,7 +48,7 @@
     "prettier": "prettier --write 'src/**/*.ts'"
   },
   "dependencies": {
-    "@pdfme/pdf-lib": "*",
+    "@sunnystudiohu/pdf-lib": "*",
     "acorn": "^8.15.0",
     "buffer": "^6.0.3",
     "zod": "^3.25.67"

@@ -1,5 +1,5 @@
-const { BLANK_PDF } = require('@pdfme/common');
-const { generate } = require('@pdfme/generator');
+const { BLANK_PDF } = require('@sunnystudiohu/common');
+const { generate } = require('@sunnystudiohu/generator');
 const fs = require('fs');
 const path = require('path');
 

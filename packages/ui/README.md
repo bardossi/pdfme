@@ -1,4 +1,4 @@
-## @pdfme/ui
+## @sunnystudiohu/ui
 
 This library provides the following classes, which can be integrated into applications built with any framework:
 

@@ -16,7 +16,7 @@ describe('split', () => {
   test('throws error for invalid ranges', async () => {
     const pdf = await createTestPDF(3);
     await expect(split(pdf, [{ start: 1, end: 0 }])).rejects.toThrow(
-      '[@pdfme/manipulator] Invalid range'
+      '[@sunnystudiohu/manipulator] Invalid range'
     );
   });
 });

@@ -1,5 +1,5 @@
 import generate from '../src/generate.js';
-import { Template, BLANK_PDF, Schema } from '@pdfme/common';
+import { Template, BLANK_PDF, Schema } from '@sunnystudiohu/common';
 import { getFont, pdfToImages } from './utils.js';
 import 'jest-image-snapshot';
 
@@ -178,7 +178,7 @@ describe('check validation', () => {
       await generate({ inputs, template, options: { font: getFont() } });
       fail();
     } catch (e: any) {
-      expect(e.message).toEqual(`[@pdfme/common] Invalid argument:
+      expect(e.message).toEqual(`[@sunnystudiohu/common] Invalid argument:
 --------------------------
 ERROR POSITION: inputs
 ERROR MESSAGE: Array must contain at least 1 element(s)
@@ -209,7 +209,7 @@ ERROR MESSAGE: Array must contain at least 1 element(s)
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] fallback flag is not found in font. true fallback flag must be only one.
+        `[@sunnystudiohu/common] fallback flag is not found in font. true fallback flag must be only one.
 Check this document: https://pdfme.com/docs/custom-fonts#about-font-type`
       );
     }
@@ -240,7 +240,7 @@ Check this document: https://pdfme.com/docs/custom-fonts#about-font-type`
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] 2 fallback flags found in font. true fallback flag must be only one.
+        `[@sunnystudiohu/common] 2 fallback flags found in font. true fallback flag must be only one.
 Check this document: https://pdfme.com/docs/custom-fonts#about-font-type`
       );
     }
@@ -276,7 +276,7 @@ Check this document: https://pdfme.com/docs/custom-fonts#about-font-type`
       fail();
     } catch (e: any) {
       expect(e.message).toEqual(
-        `[@pdfme/common] DUMMY_FONT of template.schemas is not found in font.
+        `[@sunnystudiohu/common] DUMMY_FONT of template.schemas is not found in font.
 Check this document: https://pdfme.com/docs/custom-fonts`
       );
     }

@@ -1,4 +1,4 @@
-import { Schema, BasePdf, CommonOptions } from '@pdfme/common';
+import { Schema, BasePdf, CommonOptions } from '@sunnystudiohu/common';
 import { createSingleTable } from './tableHelper.js';
 import { getBodyWithRange, getBody } from './helper.js';
 import { TableSchema } from './types.js';

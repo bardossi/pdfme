@@ -9,8 +9,8 @@ import {
   SchemaForUI,
   ChangeSchemas,
   isBlankPdf,
-} from '@pdfme/common';
-import { pdf2img, pdf2size } from '@pdfme/converter';
+} from '@sunnystudiohu/common';
+import { pdf2img, pdf2size } from '@sunnystudiohu/converter';
 
 import {
   schemasList2template,
@@ -102,7 +102,7 @@ export const useUIPreProcessor = ({ template, size, zoomLevel, maxZoom }: UIPreP
       })
       .catch((err: Error) => {
         setError(err);
-        console.error('[@pdfme/ui]', err);
+        console.error('[@sunnystudiohu/ui]', err);
       });
   }, [template, size]);
 
@@ -245,6 +245,12 @@ export const useInitEvents = ({
         const activeSchemas = getActiveSchemas();
         if (activeSchemas.length === 0) return;
         copiedSchemas.current = activeSchemas;
+      },
+      cut: () => {
+        const activeSchemas = getActiveSchemas();
+        if (activeSchemas.length === 0) return;
+        copiedSchemas.current = activeSchemas;
+        removeSchemas(activeSchemas.map((s) => s.id));
       },
       paste: () => {
         if (!copiedSchemas.current || copiedSchemas.current.length === 0) return;
