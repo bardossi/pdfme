@@ -29,7 +29,7 @@ import Paper from '../../Paper.js';
 import Renderer from '../../Renderer.js';
 import Selecto from './Selecto.js';
 import Moveable from './Moveable.js';
-// import Guides from './Guides.js'; // Disabled rulers
+import Guides from './Guides.js';
 import Mask from './Mask.js';
 import Padding from './Padding.js';
 import StaticSchema from '../../StaticSchema.js';
@@ -123,6 +123,31 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
   const verticalGuides = useRef<GuidesInterface[]>([]);
   const horizontalGuides = useRef<GuidesInterface[]>([]);
   const moveable = useRef<MoveableComponent>(null);
+  
+  // Calculate flexible ruler height based on paper size, zoom, and scale
+  const calculateFlexibleRulerHeight = (paperSize: Size, currentScale: number): number => {
+    const minRulerHeight = 15;
+    const maxRulerHeight = 35;
+    
+    // Calculate the actual rendered size of the paper in pixels
+    const renderedWidth = paperSize.width * ZOOM * currentScale;
+    const renderedHeight = paperSize.height * ZOOM * currentScale;
+    
+    // Use the smaller dimension to determine ruler size
+    const smallerDimension = Math.min(renderedWidth, renderedHeight);
+    
+    // Base ruler height on the smaller rendered dimension
+    // For very small rendered sizes, use smaller rulers
+    if (smallerDimension < 200) {
+      return Math.max(minRulerHeight, smallerDimension * 0.08);
+    } else if (smallerDimension < 400) {
+      return Math.max(minRulerHeight, smallerDimension * 0.06);
+    } else {
+      return Math.max(minRulerHeight, Math.min(maxRulerHeight, smallerDimension * 0.04));
+    }
+  };
+  
+  const flexibleRulerHeight = calculateFlexibleRulerHeight(pageSizes[pageCursor] || { width: 210, height: 297 }, scale);
 
   const [isPressShiftKey, setIsPressShiftKey] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -417,7 +442,8 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
         schemasList={schemasList}
         pageSizes={pageSizes}
         backgrounds={backgrounds}
-        hasRulers={false}
+        hasRulers={true}
+        flexibleRulerHeight={flexibleRulerHeight}
         renderPaper={({ index, paperSize }) => (
           <>
             {!editing && activeElements.length > 0 && pageCursor === index && (
@@ -433,11 +459,20 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
               totalPages={schemasList.length}
               currentPage={index + 1}
             />
-            {/* Guides/Rulers are disabled */}
+            <Guides
+              paperSize={pageSizes[index]}
+              horizontalRef={(ref) => {
+                if (ref) horizontalGuides.current[index] = ref;
+              }}
+              verticalRef={(ref) => {
+                if (ref) verticalGuides.current[index] = ref;
+              }}
+              rulerHeight={flexibleRulerHeight}
+            />
             {pageCursor !== index ? (
               <Mask
-                width={paperSize.width + RULER_HEIGHT}
-                height={paperSize.height + RULER_HEIGHT}
+                width={paperSize.width + flexibleRulerHeight}
+                height={paperSize.height + flexibleRulerHeight}
               />
             ) : (
               !editing && (

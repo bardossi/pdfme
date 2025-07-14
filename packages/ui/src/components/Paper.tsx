@@ -13,6 +13,7 @@ const Paper = (props: {
   renderPaper: (arg: { index: number; paperSize: Size }) => ReactNode;
   renderSchema: (arg: { index: number; schema: SchemaForUI }) => ReactNode;
   hasRulers?: boolean;
+  flexibleRulerHeight?: number;
 }) => {
   const {
     paperRefs,
@@ -24,9 +25,10 @@ const Paper = (props: {
     renderPaper,
     renderSchema,
     hasRulers,
+    flexibleRulerHeight,
   } = props;
   const font = useContext(FontContext);
-  const rulerHeight = hasRulers ? RULER_HEIGHT : 0;
+  const rulerHeight = hasRulers ? (flexibleRulerHeight || RULER_HEIGHT) : 0;
 
   if (pageSizes.length !== backgrounds.length || pageSizes.length !== schemasList.length) {
     return null;
