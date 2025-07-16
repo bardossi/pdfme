@@ -99,7 +99,7 @@ const LeftSidebar = ({
           <Draggable key={label} scale={scale} basePdf={basePdf} plugin={plugin}>
             <Button
               onMouseDown={() => setIsDragging(true)}
-              style={{ width: 35, height: 35, marginTop: '0.25rem', padding: '0.25rem' }}
+              style={{ width: 50, height: 50, marginTop: '0.25rem', padding: '0.25rem' }}
             >
               <PluginIcon plugin={plugin} label={label} />
             </Button>

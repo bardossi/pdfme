@@ -8,7 +8,7 @@ export const RULER_HEIGHT = 30;
 
 export const PAGE_GAP = 10;
 
-export const LEFT_SIDEBAR_WIDTH = 45;
+export const LEFT_SIDEBAR_WIDTH = 70;
 
 export const RIGHT_SIDEBAR_WIDTH = 400;
 
