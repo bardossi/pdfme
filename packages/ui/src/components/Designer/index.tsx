@@ -1,7 +1,6 @@
 import React, { useRef, useState, useContext, useCallback, useEffect } from 'react';
 import {
   cloneDeep,
-  ZOOM,
   Template,
   Schema,
   SchemaForUI,
@@ -15,7 +14,7 @@ import { DndContext } from '@dnd-kit/core';
 import RightSidebar from './RightSidebar/index.js';
 import LeftSidebar from './LeftSidebar.js';
 import Canvas from './Canvas/index.js';
-import { RULER_HEIGHT, RIGHT_SIDEBAR_WIDTH, LEFT_SIDEBAR_WIDTH } from '../../constants.js';
+import { RIGHT_SIDEBAR_WIDTH, LEFT_SIDEBAR_WIDTH } from '../../constants.js';
 import { I18nContext, OptionsContext, PluginsRegistry } from '../../contexts.js';
 import {
   schemasList2template,
@@ -362,7 +361,7 @@ const TemplateEditor = ({
             basePdf={template.basePdf}
             hoveringSchemaId={hoveringSchemaId}
             onChangeHoveringSchemaId={onChangeHoveringSchemaId}
-            height={size.height - RULER_HEIGHT * ZOOM}
+            height={size.height}
             pageCursor={pageCursor}
             scale={scale}
             size={sizeExcSidebars}

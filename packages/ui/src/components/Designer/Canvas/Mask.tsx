@@ -1,14 +1,13 @@
 import React from 'react';
 import { Size } from '@sunnystudiohu/common';
-import { RULER_HEIGHT } from '../../../constants.js';
 import { theme } from 'antd';
 
 const Mask = ({ width, height }: Size) => (
   <div
     style={{
       position: 'absolute',
-      top: -RULER_HEIGHT,
-      left: -RULER_HEIGHT,
+      top: 0,
+      left: 0,
       zIndex: 100,
       width,
       height,

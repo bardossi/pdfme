@@ -13,7 +13,7 @@ import {
   PluginRegistry,
 } from '@sunnystudiohu/common';
 import { pdf2size } from '@sunnystudiohu/converter';
-import { DEFAULT_MAX_ZOOM, RULER_HEIGHT } from './constants.js';
+import { DEFAULT_MAX_ZOOM } from './constants.js';
 import { OptionsContext } from './contexts.js';
 
 // Define a type for the hotkeys function with additional properties
@@ -428,11 +428,11 @@ export const moveCommandToChangeSchemasArg = (props: {
 export const getPagesScrollTopByIndex = (pageSizes: Size[], index: number, scale: number) => {
   return pageSizes
     .slice(0, index)
-    .reduce((acc, cur) => acc + (cur.height * ZOOM + RULER_HEIGHT * scale) * scale, 0);
+    .reduce((acc, cur) => acc + cur.height * ZOOM * scale, 0);
 };
 
 export const getSidebarContentHeight = (sidebarHeight: number) =>
-  sidebarHeight - RULER_HEIGHT - RULER_HEIGHT / 2 - 30;
+  sidebarHeight - 30;
 
 const handlePositionSizeChange = (
   schema: SchemaForUI,

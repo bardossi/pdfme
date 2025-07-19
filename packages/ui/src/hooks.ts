@@ -21,7 +21,6 @@ import {
   initShortCuts,
   destroyShortCuts,
 } from './helper.js';
-import { RULER_HEIGHT } from './constants.js';
 
 export const usePrevious = <T>(value: T) => {
   const ref = useRef<T | null>(null);
@@ -83,7 +82,7 @@ export const useUIPreProcessor = ({ template, size, zoomLevel, maxZoom }: UIPreP
 
     const _scale = Math.min(
       getScale(size.width, paperWidth),
-      getScale(size.height - RULER_HEIGHT, paperHeight),
+      getScale(size.height, paperHeight),
     );
 
     return {
@@ -143,7 +142,7 @@ export const useScrollPageCursor = ({
     const scroll = ref.current.scrollTop;
     const { top } = ref.current.getBoundingClientRect();
     const pageHeights = pageSizes.reduce((acc, cur, i) => {
-      let value = (cur.height * ZOOM + RULER_HEIGHT) * scale;
+      let value = cur.height * ZOOM * scale;
       if (i === 0) {
         value += top - value / 2;
       } else {
