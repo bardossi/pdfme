@@ -51,6 +51,7 @@ function DesignerApp() {
         domContainer: designerRef.current,
         template,
         options: {
+          isAddNewPageVisible: true,
           font: getFontsData(),
           lang: 'en',
           labels: {

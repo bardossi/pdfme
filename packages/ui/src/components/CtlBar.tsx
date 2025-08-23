@@ -95,6 +95,7 @@ type CtlBarProps = {
   setZoomLevel: (zoom: number) => void;
   addPageAfter?: () => void;
   removePage?: () => void;
+  isAddNewPageVisible?: boolean;
 };
 
 const CtlBar = (props: CtlBarProps) => {
@@ -110,10 +111,11 @@ const CtlBar = (props: CtlBarProps) => {
     setZoomLevel,
     addPageAfter,
     removePage,
+    isAddNewPageVisible = true,
   } = props;
 
   const contextMenuItems: MenuProps['items'] = [];
-  if (addPageAfter) {
+  if (addPageAfter && isAddNewPageVisible) {
     contextMenuItems.push({
       key: '1',
       label: <div onClick={addPageAfter}>{i18n('addPageAfter')}</div>,

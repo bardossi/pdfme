@@ -204,6 +204,7 @@ export const UIOptions = CommonOptions.extend({
   maxZoom: z.number().optional(),
   sidebarOpen: z.boolean().optional(),
   zoomLevel: z.number().optional(),
+  isAddNewPageVisible: z.boolean().optional(),
 });
 
 const HTMLElementSchema: z.ZodSchema<HTMLElement> = z.any().refine((v) => v instanceof HTMLElement);

@@ -329,6 +329,7 @@ const TemplateEditor = ({
             }}
             zoomLevel={zoomLevel}
             setZoomLevel={setZoomLevel}
+            isAddNewPageVisible={options.isAddNewPageVisible ?? true}
             {...pageManipulation}
           />
 
