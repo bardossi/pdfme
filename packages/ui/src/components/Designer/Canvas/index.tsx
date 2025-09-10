@@ -41,10 +41,40 @@ const fmt = (prop: string) => round(fmt4Num(prop) / ZOOM, 2);
 const isTopLeftResize = (d: string) => d === '-1,-1' || d === '-1,0' || d === '0,-1';
 const normalizeRotate = (angle: number) => ((angle % 360) + 360) % 360;
 
-const DeleteButton = ({ activeElements: aes }: { activeElements: HTMLElement[] }) => {
+const DeleteButton = ({ 
+  activeElements: aes, 
+  pageSize, 
+  scale 
+}: { 
+  activeElements: HTMLElement[];
+  pageSize?: Size;
+  scale: number;
+}) => {
   const { token } = theme.useToken();
 
-  const size = 26;
+  // Calculate responsive size based on canvas dimensions and scale
+  const calculateButtonSize = () => {
+    if (!pageSize) return 26; // Default size
+    
+    const canvasArea = pageSize.width * pageSize.height * scale;
+    const verySmallArea = 30 * 30; // Very small labels (30mm x 30mm)
+    const smallArea = 80 * 80; // Small labels (80mm x 80mm) 
+    const maxArea = 210 * 297; // A4 size threshold
+    
+    if (canvasArea <= verySmallArea) {
+      return 8; // Very small delete button for tiny labels
+    } else if (canvasArea <= smallArea) {
+      return 16; // Small delete button for small labels
+    } else if (canvasArea >= maxArea) {
+      return 26; // Default size for A4 and larger
+    } else {
+      // Linear interpolation between small and max
+      const ratio = (canvasArea - smallArea) / (maxArea - smallArea);
+      return Math.round(16 + (10 * ratio)); // Scale from 16px to 26px
+    }
+  };
+
+  const size = calculateButtonSize();
   const top = Math.min(...aes.map(({ style }) => fmt4Num(style.top)));
   const left = Math.max(...aes.map(({ style }) => fmt4Num(style.left) + fmt4Num(style.width))) + 10;
 
@@ -58,16 +88,20 @@ const DeleteButton = ({ activeElements: aes }: { activeElements: HTMLElement[] }
         left,
         width: size,
         height: size,
-        padding: 2,
+        minWidth: 'unset',
+        minHeight: 'unset',
+        padding: 0,
+        border: 'none',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: token.borderRadius,
         color: token.colorWhite,
         background: token.colorPrimary,
+        boxSizing: 'border-box',
       }}
     >
-      <X style={{ pointerEvents: 'none' }} />
+      <X style={{ pointerEvents: 'none', width: size * 0.6, height: size * 0.6 }} />
     </Button>
   );
 };
@@ -410,7 +444,11 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
         renderPaper={({ index, paperSize }) => (
           <>
             {!editing && activeElements.length > 0 && pageCursor === index && (
-              <DeleteButton activeElements={activeElements} />
+              <DeleteButton 
+                activeElements={activeElements} 
+                pageSize={pageSizes[index]}
+                scale={scale}
+              />
             )}
             <Padding basePdf={basePdf} />
             <StaticSchema
@@ -437,6 +475,8 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
                   verticalGuidelines={[]}
                   keepRatio={isPressShiftKey}
                   rotatable={rotatable}
+                  pageSize={pageSizes[index]}
+                  scale={scale}
                   onDrag={onDrag}
                   onDragEnd={onDragEnd}
                   onDragGroupEnd={onDragEnds}

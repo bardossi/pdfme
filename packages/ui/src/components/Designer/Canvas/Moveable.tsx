@@ -8,6 +8,8 @@ import MoveableComponent, {
 } from 'react-moveable';
 import { uuid } from '../../../helper.js'
 import { theme } from 'antd';
+import { Size } from '@sunnystudiohu/common';
+import './Moveable.css';
 
 type Props = {
   target: HTMLElement[];
@@ -26,6 +28,8 @@ type Props = {
   onResizeEnd: ({ target }: { target: HTMLElement | SVGElement }) => void;
   onResizeGroupEnd: ({ targets }: { targets: (HTMLElement | SVGElement)[] }) => void;
   onClick: (e: OnClick) => void;
+  pageSize?: Size;
+  scale: number;
 };
 
 const baseClassName = 'pdfme-moveable';
@@ -35,18 +39,59 @@ const Moveable = (props: Props, ref: Ref<MoveableComponent>) => {
   const instanceId = useRef(uuid());
   const uniqueClassName = `${baseClassName}-${instanceId.current}`;
 
-  useEffect(() => {
-    const containerElement = document.querySelector(`.${uniqueClassName}`);
-    const moveableLines = document.querySelectorAll(`.${uniqueClassName} .moveable-line`);
-    if (containerElement instanceof HTMLElement) {
-      containerElement.style.setProperty('--moveable-color', token.colorPrimary);
-      moveableLines.forEach((e) => {
-        if (e instanceof HTMLElement) {
-          e.style.setProperty('--moveable-color', token.colorPrimary);
-        }
-      });
+  // Calculate responsive control handle size based on canvas size and scale
+  const calculateControlSize = () => {
+    const { pageSize, scale } = props;
+    if (!pageSize) return 8; // Default size
+    
+    const canvasArea = pageSize.width * pageSize.height * scale;
+    const verySmallArea = 30 * 30; // Very small labels (30mm x 30mm)
+    const smallArea = 80 * 80; // Small labels (80mm x 80mm)
+    const maxArea = 210 * 297; // A4 size threshold
+    
+    if (canvasArea <= verySmallArea) {
+      return 6; // Slightly bigger handles for tiny labels (was 4)
+    } else if (canvasArea <= smallArea) {
+      return 7; // Slightly bigger handles for small labels (was 5)
+    } else if (canvasArea >= maxArea) {
+      return 8; // Default size for A4 and larger
+    } else {
+      // Linear interpolation between small and max
+      const ratio = (canvasArea - smallArea) / (maxArea - smallArea);
+      return Math.round(7 + (1 * ratio)); // Scale from 7px to 8px
     }
-  }, [props.target, token.colorPrimary, uniqueClassName]);
+  };
+
+  useEffect(() => {
+    // Small delay to ensure DOM elements are created
+    const timeout = setTimeout(() => {
+      const containerElement = document.querySelector(`.${uniqueClassName}`);
+      const moveableLines = document.querySelectorAll(`.${uniqueClassName} .moveable-line`);
+      const moveableControls = document.querySelectorAll(`.${uniqueClassName} .moveable-control`);
+      
+      if (containerElement instanceof HTMLElement) {
+        containerElement.style.setProperty('--moveable-color', token.colorPrimary);
+        moveableLines.forEach((e) => {
+          if (e instanceof HTMLElement) {
+            e.style.setProperty('--moveable-color', token.colorPrimary);
+          }
+        });
+        
+        // Apply responsive sizing to control handles
+        const controlSize = calculateControlSize();
+        moveableControls.forEach((control) => {
+          if (control instanceof HTMLElement) {
+            control.style.width = `${controlSize}px`;
+            control.style.height = `${controlSize}px`;
+            // Adjust margin to keep controls properly positioned
+            control.style.margin = `${-controlSize / 2}px 0 0 ${-controlSize / 2}px`;
+          }
+        });
+      }
+    }, 50); // 50ms delay
+
+    return () => clearTimeout(timeout);
+  }, [props.target, props.pageSize, props.scale, token.colorPrimary, uniqueClassName]);
 
   return (
     <MoveableComponent

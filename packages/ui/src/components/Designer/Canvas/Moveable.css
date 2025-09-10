@@ -1,0 +1,38 @@
+/* Responsive Moveable Controls for Small Canvases */
+.pdfme-moveable .moveable-control {
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 1px solid #fff;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+  background: var(--moveable-color, #4285f4);
+  transition: all 0.1s ease;
+}
+
+/* Ensure controls maintain minimum visibility */
+.pdfme-moveable .moveable-control.moveable-direction {
+  min-width: 4px;
+  min-height: 4px;
+}
+
+/* Responsive control sizing for small canvases */
+@media screen and (max-width: 768px) {
+  .pdfme-moveable .moveable-control {
+    border-width: 0.5px;
+  }
+}
+
+/* Line styles for better visibility on small canvases */
+.pdfme-moveable .moveable-line {
+  background: var(--moveable-color, #4285f4);
+  min-height: 1px;
+  min-width: 1px;
+}
+
+/* Rotation control adjustments */
+.pdfme-moveable .moveable-rotation-control {
+  width: auto !important;
+  height: auto !important;
+  border-radius: 50%;
+  min-width: 12px;
+  min-height: 12px;
+}
