@@ -106,6 +106,8 @@ const cutWin = 'ctrl+x';
 const cutMac = 'command+x';
 const pasteWin = 'ctrl+v';
 const pasteMac = 'command+v';
+const pasteInPlaceWin = 'ctrl+shift+v';
+const pasteInPlaceMac = 'command+shift+v';
 const redoWin = 'ctrl+y';
 const redoMac = 'shift+command+z';
 const undoWin = 'ctrl+z';
@@ -133,6 +135,8 @@ const keys = [
   cutMac,
   pasteWin,
   pasteMac,
+  pasteInPlaceWin,
+  pasteInPlaceMac,
   redoWin,
   redoMac,
   undoWin,
@@ -150,6 +154,7 @@ export const initShortCuts = (arg: {
   copy: () => void;
   cut: () => void;
   paste: () => void;
+  pasteInPlace: () => void;
   redo: () => void;
   undo: () => void;
   save: () => void;
@@ -195,6 +200,10 @@ export const initShortCuts = (arg: {
       case pasteWin:
       case pasteMac:
         arg.paste();
+        break;
+      case pasteInPlaceWin:
+      case pasteInPlaceMac:
+        arg.pasteInPlace();
         break;
       case redoWin:
       case redoMac:

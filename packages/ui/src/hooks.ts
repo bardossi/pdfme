@@ -216,6 +216,7 @@ export const useInitEvents = ({
   onEditEnd,
 }: UseInitEventsParams) => {
   const copiedSchemas = useRef<SchemaForUI[] | null>(null);
+  const originalCopiedSchemas = useRef<SchemaForUI[] | null>(null);
 
   const initEvents = useCallback(() => {
     const getActiveSchemas = () => {
@@ -244,11 +245,13 @@ export const useInitEvents = ({
         const activeSchemas = getActiveSchemas();
         if (activeSchemas.length === 0) return;
         copiedSchemas.current = activeSchemas;
+        originalCopiedSchemas.current = cloneDeep(activeSchemas);
       },
       cut: () => {
         const activeSchemas = getActiveSchemas();
         if (activeSchemas.length === 0) return;
         copiedSchemas.current = activeSchemas;
+        originalCopiedSchemas.current = cloneDeep(activeSchemas);
         removeSchemas(activeSchemas.map((s) => s.id));
       },
       paste: () => {
@@ -274,6 +277,31 @@ export const useInitEvents = ({
         commitSchemas(schemasList[pageCursor].concat(pasteSchemas));
         onEdit(pasteSchemas.map((s) => document.getElementById(s.id)!));
         copiedSchemas.current = pasteSchemas;
+      },
+      pasteInPlace: () => {
+        if (!originalCopiedSchemas.current || originalCopiedSchemas.current.length === 0) return;
+        const schema = schemasList[pageCursor];
+        const stackUniqueSchemaNames: string[] = [];
+        const pasteSchemas = originalCopiedSchemas.current.map((cs) => {
+          const id = uuid();
+          const name = getUniqueSchemaName({
+            copiedSchemaName: cs.name,
+            schema,
+            stackUniqueSchemaNames,
+          });
+          const { height, width, position: p } = cs;
+          const ps = pageSizes[pageCursor];
+          // For paste-in-place, keep the exact same position - no offset
+          const position = {
+            x: Math.max(0, Math.min(p.x, ps.width - width)),
+            y: Math.max(0, Math.min(p.y, ps.height - height)),
+          };
+
+          return Object.assign(cloneDeep(cs), { id, name, position });
+        });
+        commitSchemas(schemasList[pageCursor].concat(pasteSchemas));
+        onEdit(pasteSchemas.map((s) => document.getElementById(s.id)!));
+        // Don't update copiedSchemas.current for paste-in-place to preserve regular paste functionality
       },
       redo: () => timeTravel('redo'),
       undo: () => timeTravel('undo'),
