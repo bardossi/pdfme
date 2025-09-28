@@ -143,8 +143,8 @@ export const getBlankTemplate = () =>
   ({
     schemas: [{}],
     basePdf: {
-      width: 70,
-      height: 42.4,
+      width: 594,
+      height: 840,
       padding: [0, 0, 0, 0],
     },
   } as Template);

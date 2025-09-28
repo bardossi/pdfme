@@ -63,6 +63,8 @@ function FormAndViewerApp() {
         template,
         inputs,
         options: {
+          hideZoomControls: true,
+          hideScrollbars: true,
           font: getFontsData(),
           lang: 'en',
           labels: { 'signature.clear': 'Clear' },

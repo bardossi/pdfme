@@ -138,25 +138,34 @@ const Preview = ({
 
   return (
     <Root size={size} scale={scale}>
-      <CtlBar
-        size={size}
-        pageCursor={pageCursor}
-        pageNum={schemasList.length}
-        setPageCursor={(p) => {
-          if (!containerRef.current) return;
-          containerRef.current.scrollTop = getPagesScrollTopByIndex(pageSizes, p, scale);
-          setPageCursor(p);
-        }}
-        zoomLevel={zoomLevel}
-        setZoomLevel={setZoomLevel}
-      />
+      {!options.hideZoomControls && (
+        <CtlBar
+          size={size}
+          pageCursor={pageCursor}
+          pageNum={schemasList.length}
+          setPageCursor={(p) => {
+            if (!containerRef.current) return;
+            containerRef.current.scrollTop = getPagesScrollTopByIndex(pageSizes, p, scale);
+            setPageCursor(p);
+          }}
+          zoomLevel={zoomLevel}
+          setZoomLevel={setZoomLevel}
+        />
+      )}
       <UnitPager
         size={size}
         unitCursor={unitCursor}
         unitNum={inputs.length}
         setUnitCursor={setUnitCursor}
       />
-      <div ref={containerRef} style={{ ...size, position: 'relative', overflow: 'auto' }}>
+      <div
+        ref={containerRef}
+        style={{
+          ...size,
+          position: 'relative',
+          overflow: options.hideScrollbars ? 'hidden' : 'auto'
+        }}
+      >
         <Paper
           paperRefs={paperRefs}
           scale={scale}
