@@ -374,6 +374,7 @@ const TemplateEditor = ({
             removeSchemas={removeSchemas}
             sidebarOpen={sidebarOpen}
             onEdit={onEdit}
+            addSchema={addSchema}
           />
         </div>
       </DndContext>

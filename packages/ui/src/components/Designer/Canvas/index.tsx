@@ -19,6 +19,7 @@ import {
   BasePdf,
   isBlankPdf,
   replacePlaceholders,
+  Schema,
 } from '@sunnystudiohu/common';
 import { PluginsRegistry } from '../../../contexts.js';
 import { X } from 'lucide-react';
@@ -124,6 +125,7 @@ interface Props {
   removeSchemas: (ids: string[]) => void;
   paperRefs: MutableRefObject<HTMLDivElement[]>;
   sidebarOpen: boolean;
+  addSchema?: (schema: Schema) => void;
 }
 
 const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
@@ -143,6 +145,7 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
     onChangeHoveringSchemaId,
     paperRefs,
     sidebarOpen,
+    addSchema,
   } = props;
   const { token } = theme.useToken();
   const pluginsRegistry = useContext(PluginsRegistry);
@@ -162,15 +165,103 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
     if (e.key === 'Escape' || e.key === 'Esc') setEditing(false);
   };
 
+  const onPaste = useCallback((e: ClipboardEvent) => {
+    if (!addSchema) return; // If addSchema is not provided, don't handle paste
+
+    const clipboardItems = e.clipboardData?.items;
+    if (!clipboardItems) return;
+
+    // Look for image items in the clipboard
+    for (let i = 0; i < clipboardItems.length; i++) {
+      const item = clipboardItems[i];
+      if (item.type.startsWith('image/')) {
+        e.preventDefault();
+
+        const file = item.getAsFile();
+        if (!file) continue;
+
+        // Convert the file to base64
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          if (!result) return;
+
+          try {
+            // Get the image plugin's default schema
+            const imagePlugin = pluginsRegistry.entries().find(([, plugin]) =>
+              plugin.propPanel.defaultSchema &&
+              typeof plugin.propPanel.defaultSchema === 'object' &&
+              plugin.propPanel.defaultSchema !== null &&
+              'type' in plugin.propPanel.defaultSchema &&
+              plugin.propPanel.defaultSchema.type === 'image'
+            );
+
+            if (!imagePlugin || !imagePlugin[1].propPanel.defaultSchema) {
+              console.warn('Image plugin not found');
+              return;
+            }
+
+            const defaultSchema = imagePlugin[1].propPanel.defaultSchema as Schema;
+
+            // Calculate position for the new image (center of the visible area)
+            const canvasElement = ref as React.RefObject<HTMLDivElement>;
+            let x = defaultSchema.position.x;
+            let y = defaultSchema.position.y;
+
+            // If we can access the canvas element, try to position based on scroll
+            if (canvasElement?.current && pageSizes[pageCursor]) {
+              const scrollTop = canvasElement.current.scrollTop;
+              const scrollLeft = canvasElement.current.scrollLeft;
+              const visibleHeight = canvasElement.current.clientHeight;
+              const visibleWidth = canvasElement.current.clientWidth;
+
+              // Convert scroll position to page coordinates
+              const pageScrollY = scrollTop / (scale * ZOOM);
+              const pageScrollX = scrollLeft / (scale * ZOOM);
+
+              // Position in the center of the visible area
+              x = Math.max(0, Math.min(pageSizes[pageCursor].width - defaultSchema.width,
+                pageScrollX + (visibleWidth / (scale * ZOOM)) / 2 - defaultSchema.width / 2));
+              y = Math.max(0, Math.min(pageSizes[pageCursor].height - defaultSchema.height,
+                pageScrollY + (visibleHeight / (scale * ZOOM)) / 2 - defaultSchema.height / 2));
+            }
+
+            // Create the new image schema with the pasted image data
+            const newImageSchema: Schema = {
+              ...defaultSchema,
+              content: result,
+              position: { x, y }
+            };
+
+            // Use the provided addSchema function to properly add the schema
+            addSchema(newImageSchema);
+
+          } catch (error) {
+            console.error('Error processing pasted image:', error);
+          }
+        };
+
+        reader.onerror = () => {
+          console.error('Error reading image file');
+        };
+
+        reader.readAsDataURL(file);
+        break; // Only process the first image found
+      }
+    }
+  }, [addSchema, pluginsRegistry, pageCursor, pageSizes, scale, ref]);
+
   const initEvents = useCallback(() => {
     window.addEventListener('keydown', onKeydown);
     window.addEventListener('keyup', onKeyup);
-  }, []);
+    window.addEventListener('paste', onPaste);
+  }, [onPaste]);
 
   const destroyEvents = useCallback(() => {
     window.removeEventListener('keydown', onKeydown);
     window.removeEventListener('keyup', onKeyup);
-  }, []);
+    window.removeEventListener('paste', onPaste);
+  }, [onPaste]);
 
   useEffect(() => {
     initEvents();
