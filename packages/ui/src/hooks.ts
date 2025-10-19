@@ -217,6 +217,7 @@ export const useInitEvents = ({
 }: UseInitEventsParams) => {
   const copiedSchemas = useRef<SchemaForUI[] | null>(null);
   const originalCopiedSchemas = useRef<SchemaForUI[] | null>(null);
+  const hasCopiedSinceLastPaste = useRef<boolean>(false);
 
   const initEvents = useCallback(() => {
     const getActiveSchemas = () => {
@@ -233,6 +234,15 @@ export const useInitEvents = ({
       s[pageCursor] = stack.current.pop()!;
       setSchemasList(s);
     };
+
+    // Expose a function to clear internal clipboard (called by Canvas when external content is pasted)
+    const w = window as Window & { __sunnystudiohu_clearInternalClipboard?: () => void };
+    w.__sunnystudiohu_clearInternalClipboard = () => {
+      copiedSchemas.current = null;
+      originalCopiedSchemas.current = null;
+      console.log('[Hotkeys] Internal clipboard cleared by external paste');
+    };
+
     initShortCuts({
       move: (command, isShift) => {
         const pageSize = pageSizes[pageCursor];
@@ -246,16 +256,35 @@ export const useInitEvents = ({
         if (activeSchemas.length === 0) return;
         copiedSchemas.current = activeSchemas;
         originalCopiedSchemas.current = cloneDeep(activeSchemas);
+        hasCopiedSinceLastPaste.current = true;
+        console.log('[Hotkeys] Copied internal objects');
       },
       cut: () => {
         const activeSchemas = getActiveSchemas();
         if (activeSchemas.length === 0) return;
         copiedSchemas.current = activeSchemas;
         originalCopiedSchemas.current = cloneDeep(activeSchemas);
+        hasCopiedSinceLastPaste.current = true;
         removeSchemas(activeSchemas.map((s) => s.id));
+        console.log('[Hotkeys] Cut internal objects');
       },
-      paste: () => {
-        if (!copiedSchemas.current || copiedSchemas.current.length === 0) return;
+      paste: (e?: KeyboardEvent) => {
+        // Only handle internal objects IF user has copied since last paste
+        if (!copiedSchemas.current || copiedSchemas.current.length === 0 || !hasCopiedSinceLastPaste.current) {
+          console.log('[Hotkeys] No internal objects to paste or not copied since last paste');
+          return;
+        }
+
+        console.log('[Hotkeys] Pasting internal objects, preventing default');
+        // Prevent the paste event from propagating to Canvas handler
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+
+        // Mark that we've pasted (prevents pasting again without a new copy)
+        hasCopiedSinceLastPaste.current = false;
+
         const schema = schemasList[pageCursor];
         const stackUniqueSchemaNames: string[] = [];
         const pasteSchemas = copiedSchemas.current.map((cs) => {
@@ -276,10 +305,20 @@ export const useInitEvents = ({
         });
         commitSchemas(schemasList[pageCursor].concat(pasteSchemas));
         onEdit(pasteSchemas.map((s) => document.getElementById(s.id)!));
+        // Update copiedSchemas to the newly pasted schemas for next paste operation
         copiedSchemas.current = pasteSchemas;
+        console.log('[Hotkeys] Internal paste complete');
       },
-      pasteInPlace: () => {
+      pasteInPlace: (e?: KeyboardEvent) => {
+        // Only handle internal objects - let Canvas handler deal with external clipboard
         if (!originalCopiedSchemas.current || originalCopiedSchemas.current.length === 0) return;
+
+        // Prevent the paste event from propagating to Canvas handler
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+
         const schema = schemasList[pageCursor];
         const stackUniqueSchemaNames: string[] = [];
         const pasteSchemas = originalCopiedSchemas.current.map((cs) => {

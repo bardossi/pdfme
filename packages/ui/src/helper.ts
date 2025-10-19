@@ -153,8 +153,8 @@ export const initShortCuts = (arg: {
   esc: () => void;
   copy: () => void;
   cut: () => void;
-  paste: () => void;
-  pasteInPlace: () => void;
+  paste: (e?: KeyboardEvent) => void;
+  pasteInPlace: (e?: KeyboardEvent) => void;
   redo: () => void;
   undo: () => void;
   save: () => void;
@@ -199,11 +199,11 @@ export const initShortCuts = (arg: {
         break;
       case pasteWin:
       case pasteMac:
-        arg.paste();
+        arg.paste(e);
         break;
       case pasteInPlaceWin:
       case pasteInPlaceMac:
-        arg.pasteInPlace();
+        arg.pasteInPlace(e);
         break;
       case redoWin:
       case redoMac:

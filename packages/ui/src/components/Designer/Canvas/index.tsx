@@ -150,7 +150,6 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
   const { token } = theme.useToken();
   const pluginsRegistry = useContext(PluginsRegistry);
   const moveable = useRef<MoveableComponent>(null);
-  
 
   const [isPressShiftKey, setIsPressShiftKey] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -168,14 +167,29 @@ const Canvas = (props: Props, ref: Ref<HTMLDivElement>) => {
   const onPaste = useCallback((e: ClipboardEvent) => {
     if (!addSchema) return; // If addSchema is not provided, don't handle paste
 
+    console.log('[Canvas] onPaste triggered');
+
     const clipboardItems = e.clipboardData?.items;
-    if (!clipboardItems) return;
+    if (!clipboardItems) {
+      console.log('[Canvas] No clipboard items');
+      return;
+    }
+
+    console.log('[Canvas] Checking for images in clipboard, items:', clipboardItems.length);
 
     // Look for image items in the clipboard
     for (let i = 0; i < clipboardItems.length; i++) {
       const item = clipboardItems[i];
       if (item.type.startsWith('image/')) {
         e.preventDefault();
+        e.stopPropagation();
+
+        // Signal to hotkeys that external content was pasted (clear internal clipboard)
+        const w = window as Window & { __sunnystudiohu_clearInternalClipboard?: () => void };
+        if (w.__sunnystudiohu_clearInternalClipboard) {
+          w.__sunnystudiohu_clearInternalClipboard();
+          console.log('[Canvas] Cleared internal clipboard');
+        }
 
         const file = item.getAsFile();
         if (!file) continue;
