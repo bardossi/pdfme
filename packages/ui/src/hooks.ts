@@ -140,23 +140,30 @@ export const useScrollPageCursor = ({
     }
 
     const scroll = ref.current.scrollTop;
-    const { top } = ref.current.getBoundingClientRect();
-    const pageHeights = pageSizes.reduce((acc, cur, i) => {
-      let value = cur.height * ZOOM * scale;
-      if (i === 0) {
-        value += top - value / 2;
-      } else {
-        value += acc[i - 1];
-      }
+    const pageTops = pageSizes.map((_, i) => {
+      if (i === 0) return 0;
+      const pagesHeight = pageSizes
+        .slice(0, i)
+        .reduce((acc, cur) => acc + cur.height * ZOOM * scale, 0);
 
-      return acc.concat(value);
-    }, [] as number[]);
-    let _pageCursor = 0;
-    pageHeights.forEach((ph, i) => {
-      if (scroll > ph) {
-        _pageCursor = i + 1 >= pageHeights.length ? pageHeights.length - 1 : i + 1;
-      }
+      // Corresponds to the layout logic in Paper.tsx for hasRulers=false
+      const initialGap = 10 * 2 * scale;
+      const gap = 10 * scale;
+      const gapsHeight = initialGap + (i - 1) * gap;
+
+      return pagesHeight + gapsHeight;
     });
+
+    const scrollWithMargin = scroll + 8;
+
+    let _pageCursor = 0;
+    for (let i = pageTops.length - 1; i >= 0; i--) {
+      if (scrollWithMargin >= pageTops[i]) {
+        _pageCursor = i;
+        break;
+      }
+    }
+
     if (_pageCursor !== pageCursor) {
       onChangePageCursor(_pageCursor);
     }

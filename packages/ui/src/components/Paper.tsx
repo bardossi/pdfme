@@ -60,11 +60,11 @@ const Paper = (props: {
 
         // Rulers are drawn above/before the top of each page, so each Paper div must have
         // a top offset considering them.
-        let pageTop = paperIndex > 0 ? (rulerHeight + PAGE_GAP) * (paperIndex + 1) : rulerHeight;
-
-        if (!hasRulers) {
-          // If no rulers (i.e. Preview/Form) then we'll add an initial gap at the top of the first page
-          pageTop += PAGE_GAP * 2;
+        let pageTop: number;
+        if (hasRulers) {
+          pageTop = paperIndex > 0 ? PAGE_GAP : rulerHeight;
+        } else {
+          pageTop = paperIndex > 0 ? PAGE_GAP : PAGE_GAP * 2;
         }
 
         return (

@@ -435,9 +435,18 @@ export const moveCommandToChangeSchemasArg = (props: {
 };
 
 export const getPagesScrollTopByIndex = (pageSizes: Size[], index: number, scale: number) => {
-  return pageSizes
+  if (index === 0) return 0;
+
+  const pagesHeight = pageSizes
     .slice(0, index)
     .reduce((acc, cur) => acc + cur.height * ZOOM * scale, 0);
+
+  // Corresponds to the layout logic in Paper.tsx for hasRulers=false
+  const initialGap = 10 * 2 * scale;
+  const gap = 10 * scale;
+  const gapsHeight = initialGap + (index - 1) * gap;
+
+  return pagesHeight + gapsHeight;
 };
 
 export const getSidebarContentHeight = (sidebarHeight: number) =>
