@@ -60,12 +60,7 @@ const Paper = (props: {
 
         // Rulers are drawn above/before the top of each page, so each Paper div must have
         // a top offset considering them.
-        let pageTop: number;
-        if (hasRulers) {
-          pageTop = paperIndex > 0 ? PAGE_GAP : rulerHeight;
-        } else {
-          pageTop = paperIndex > 0 ? PAGE_GAP : PAGE_GAP * 2;
-        }
+        const pageTop = paperIndex > 0 ? PAGE_GAP : (hasRulers ? rulerHeight : PAGE_GAP * 2);
 
         return (
           <div
@@ -87,7 +82,7 @@ const Paper = (props: {
             }}
             style={{
               fontFamily: `'${getFallbackFontName(font)}'`,
-              top: `${pageTop}px`,
+              marginTop: `${pageTop}px`,
               left: leftCenteringIndent,
               position: 'relative',
               backgroundImage: `url(${background})`,

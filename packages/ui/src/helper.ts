@@ -442,11 +442,11 @@ export const getPagesScrollTopByIndex = (pageSizes: Size[], index: number, scale
     .reduce((acc, cur) => acc + cur.height * ZOOM * scale, 0);
 
   // Corresponds to the layout logic in Paper.tsx for hasRulers=false
-  const initialGap = 10 * 2 * scale;
-  const gap = 10 * scale;
-  const gapsHeight = initialGap + (index - 1) * gap;
+  const initialMargin = 20 * scale;
+  const margin = 10 * scale;
+  const marginsHeight = initialMargin + (index - 1) * margin;
 
-  return pagesHeight + gapsHeight;
+  return pagesHeight + marginsHeight;
 };
 
 export const getSidebarContentHeight = (sidebarHeight: number) =>
