@@ -357,7 +357,11 @@ export const useInitEvents = ({
         });
         commitSchemas(schemasList[pageCursor].concat(pasteSchemas));
         onEdit(pasteSchemas.map((s) => document.getElementById(s.id)!));
-        // Don't update copiedSchemas.current for paste-in-place to preserve regular paste functionality
+        
+        // Clear the clipboard after paste-in-place to avoid unexpected behavior
+        copiedSchemas.current = null;
+        originalCopiedSchemas.current = null;
+        hasCopiedSinceLastPaste.current = false;
       },
       redo: () => timeTravel('redo'),
       undo: () => timeTravel('undo'),
